@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Send Flex Message</title>
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+</head>
+<body>
+  <h2>📦 發送 Flex Message 給自己</h2>
+  <button onclick="sendFlex()">點我發送</button>
+
+  <script>
+    async function sendFlex() {
+      await liff.init({ liffId: '2007269436-vljr6LGL' });
+
+      if (!liff.isLoggedIn()) {
+        liff.login();
+        return;
+      }
+
+      const flexMessage = {
+        type: 'flex',
+        altText: '請在手機上查看數位版名片',
+        contents: {
+          type: 'carousel',
+          contents: [ // ← 這裡貼上你剛剛的 bubble JSON ]
+        }
+      };
+
+      liff.sendMessages([flexMessage])
+        .then(() => {
+          alert('✅ Flex Message 已發送！');
+        })
+        .catch((err) => {
+          alert('❌ 發送失敗：' + err);
+        });
+    }
+  </script>
+</body>
+</html>
